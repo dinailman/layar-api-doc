@@ -230,7 +230,16 @@ if all of this fields `dashboard`, `section` and `thresholdID` are found on DB, 
   "thresholdType": "Lower",
   "thresholdValue": 30000,
   "unit": "KB",
-  "bounds": [{ "key": "Google Recomendation Size", "value": 20000 }, { "key": "Alibaba APK Size", "value": 100000 }]
+  "bounds": [
+    {
+      "key": "Google Recomendation Size",
+      "value": 20000
+    },
+    {
+      "key": "Alibaba APK Size",
+      "value": 100000
+    }
+  ]
 }
 ```
 
