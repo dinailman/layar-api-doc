@@ -288,7 +288,7 @@ if all of this fields `dashboard`, `section` and `thresholdID` are found on DB, 
         {
           "thresholdId": "unitTestCoverage",
           "thresholdName": "Unit Test Coverage",
-          "thresholdType": "Lower",
+          "thresholdType": "Higher",
           "thresholdValue": 50,
           "unit": "%",
           "bounds": []
