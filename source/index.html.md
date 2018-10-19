@@ -14,11 +14,11 @@ search: true
 
 Layar API Documentation. WIP and Draft
 
+Curl example WIP
+
 # Dashboards
 
 ## Add a new dashboard
-
-`PUT /dashboard`
 
 > Example paylaod
 
@@ -36,9 +36,10 @@ Layar API Documentation. WIP and Draft
 }
 ```
 
-## Get all dashboard
+`PUT /dashboard`
 
-`GET /dashboard`
+
+## Get all dashboard
 
 > Example response
 
@@ -48,55 +49,66 @@ Layar API Documentation. WIP and Draft
 }
 ```
 
+`GET /dashboard`
+
 # Reports
 
 ## Add a new Report
 
-This api is used for send report to layar dashboard <br>
-
-`PUT /report`
 
 > Example Payload
-> `CustomID` in this case is combination of string `pr-` and PR number
 
 ```json
 {
   "dashboard": "android",
+  "reportID": "pr-1410",
   "attributes": [
     {
       "key": "commitHash",
+      "name": "Commit Hash",
       "value": "d6cd1e2bd19e03a81132a23b2025920577f84e37"
     },
     {
       "key": "branch",
+      "name": "Branch",
       "value": "feature/test"
     },
     {
       "key": "target",
+      "name": "Target",
       "value": "master"
     },
     {
       "key": "prLink",
+      "name": "PR link",
       "value": "https://github.com/traveloka/android-v3/pull/1410"
     },
     {
       "key": "author",
+      "name": "Author",
       "value": "fchristysen"
     }
   ],
-  "useCustomID": "true",
-  "customID": "pr-1410",
   "sections": [
     {
       "sectionName": "app",
       "sectionDetail": [
         {
           "detailName": "GeneralApps",
+          "tags": [],
           "reports": [
             {
-              "key": "apkSize",
+              "thresholdId": "apkSize",
               "value": 200,
-              "tags": []
+              "label": "",
+              "status": "pass",
+              "additionalValue": [
+                {
+                  "key": "excellenceIndex",
+                  "name": "Excellence Index",
+                  "value": 60
+                }
+              ]
             }
           ]
         }
@@ -107,21 +119,39 @@ This api is used for send report to layar dashboard <br>
       "sectionDetail": [
         {
           "detailName": "Flight",
+          "tags": ["flight"],
           "reports": [
             {
-              "key": "unitTestCoverage",
+              "thresholdId": "unitTestCoverage",
               "value": 20,
-              "tags": ["flight"]
+              "label": "",
+              "status": "pass",
+              "additionalValue": [
+                {
+                  "key": "excellenceIndex",
+                  "name": "Excellence Index",
+                  "value": 60
+                }
+              ]
             }
           ]
         },
         {
           "detailName": "Train",
+          "tags": ["train"],
           "reports": [
             {
-              "key": "unitTestCoverage",
+              "thresholdId": "unitTestCoverage",
               "value": 30,
-              "tags": ["train"]
+              "label": "",
+              "status": "pass",
+              "additionalValue": [
+                {
+                  "key": "excellenceIndex",
+                  "name": "Excellence Index",
+                  "value": 60
+                }
+              ]
             }
           ]
         }
@@ -132,31 +162,65 @@ This api is used for send report to layar dashboard <br>
       "sectionDetail": [
         {
           "detailName": "FlightSearch",
+          "tags": ["flight", "search"],
           "reports": [
             {
-              "key": "ttfi",
+              "thresholdId": "ttfi",
               "value": 2000,
-              "tags": ["flight", "ttfi"]
+              "label": "",
+              "status": "pass",
+              "additionalValue": [
+                {
+                  "key": "excellenceIndex",
+                  "name": "Excellence Index",
+                  "value": 60
+                }
+              ]
             },
             {
-              "key": "fps",
+              "thresholdId": "fps",
               "value": 40,
-              "tags": ["flight", "fps"]
+              "label": "",
+              "status": "pass",
+              "additionalValue": [
+                {
+                  "key": "excellenceIndex",
+                  "name": "Excellence Index",
+                  "value": 60
+                }
+              ]
             }
           ]
         },
         {
           "detailName": "TrainSearch",
+          "tags": ["train"],
           "reports": [
             {
-              "key": "ttfi",
+              "thresholdId": "ttfi",
               "value": 1000,
-              "tags": ["flight", "ttfi"]
+              "label": "",
+              "status": "pass",
+              "additionalValue": [
+                {
+                  "key": "excellenceIndex",
+                  "name": "Excellence Index",
+                  "value": 60
+                }
+              ]
             },
             {
-              "key": "fps",
+              "thresholdId": "fps",
               "value": 30,
-              "tags": ["flight", "fps"]
+              "label": "",
+              "status": "pass",
+              "additionalValue": [
+                {
+                  "key": "excellenceIndex",
+                  "name": "Excellence Index",
+                  "value": 60
+                }
+              ]
             }
           ]
         }
@@ -164,58 +228,36 @@ This api is used for send report to layar dashboard <br>
     }
   ]
 }
+
 ```
+
+This api is used for send report to layar dashboard <br>
+Default behavior for this api is upsert
+
+`PUT /report`
+
+
+| Payload    | required | Description                                                 |
+|------------|----------|-------------------------------------------------------------|
+| dashboard  | true     | Dashboard ID                                                |
+| reportID   | false    | Custom report id, if not provided it will be auto generated |
+| attributes | false    | List of [Attribute](#attribute) object                      |
+| sections   | true     | List of [Section](#section) object                          |
+
 
 > Example response
-> If `useCustomID` value is `true`, reportID will generate using `customID` value with `dashboard` name as prefix, if `customID` key already defind on DB, it will be overwritten
 
 ```json
 {
-  "reportID": "android-pr-1410",
+  "reportID": "pr-1410",
   "status": "success"
 }
 ```
 
-## Update a report
-
-This api is used for Update a report and it will upsert the data<br>
-
-`POST /report`
-
-> Example Payload
-
-```json
-{
-  "reportID": "android-pr-1410",
-  "sections": [
-    {
-      "sectionName": "app",
-      "sectionDetail": [
-        {
-          "detailName": "GeneralApps",
-          "reports": [{ "key": "assetSize", "value": 3000 }]
-        }
-      ]
-    }
-  ]
-}
-```
-
-> Example Response
-
-```json
-{
-  "reportID": "android-pr-1410",
-  "status": "success"
-}
-```
 
 # Thresholds
 
 ## Add a Threshold
-
-`thresholdType` is one of this value `["Lower", "Higher", "Equal"]`
-if all of this fields `dashboard`, `section` and `thresholdID` are found on DB, it will overwritten the old value.
 
 `PUT /threshold`
 
@@ -243,6 +285,18 @@ if all of this fields `dashboard`, `section` and `thresholdID` are found on DB, 
 }
 ```
 
+| Payload        | required | Description                                                        |
+|----------------|----------|--------------------------------------------------------------------|
+| dashboard      | true     | One of [Dashboard](#get-all-dashboard)                             |
+| section        | true     | Section name                                                       |
+| thresholdId    | true     | Threshold id                                                       |
+| thresholdName  | true     | Threshold name                                                     |
+| thresholdType  | true     | Threshold type is one of this value `["Lower", "Higher", "Equal"]` |
+| thresholdValue | true     | Threshold value                                                    |
+| unit           | false    | Threshold unit                                                     |
+| bounds         | false    | List of [Attribute](#attribute) object                             |
+
+
 ## Get Thresholds by dashboard name
 
 `GET /threshold?dashboard=android`
@@ -263,11 +317,13 @@ if all of this fields `dashboard`, `section` and `thresholdID` are found on DB, 
           "unit": "KB",
           "bounds": [
             {
-              "key": "Google Recomendation Size",
+              "key": "googleSize",
+              "name": "Google Recomendation Size",
               "value": 20000
             },
             {
-              "key": "Alibaba APK Size",
+              "key": "alibabaAPKSize",
+              "name": "Alibaba APK Size",
               "value": 100000
             }
           ]
@@ -348,11 +404,13 @@ if all of this fields `dashboard`, `section` and `thresholdID` are found on DB, 
           "unit": "KB",
           "bounds": [
             {
-              "key": "Google Recomendation Size",
+              "key": "google",
+              "name": "Google Recomendation Size",
               "value": 20000
             },
             {
-              "key": "Alibaba APK Size",
+              "key": "alibaba",
+              "name": "Alibaba APK Size",
               "value": 100000
             }
           ]
@@ -375,6 +433,82 @@ if all of this fields `dashboard`, `section` and `thresholdID` are found on DB, 
 
 //TODO
 
-# Threshold whitelist
 
-//TODO
+# Standard Objects
+## Attribute
+
+```json
+{
+  "key": "commitHash",
+  "name": "Commit Hash",
+  "value": "d6cd1e2bd19e03a81132a23b2025920577f84e37"
+}
+```
+
+| Payload | required | Description                                               |
+|---------|----------|-----------------------------------------------------------|
+| key     | true     | Attribute key,                                            |
+| name    | true     | Attribute name, this fields will shown on dashboard label |
+| value   | true     | Value to be shown on dashboard                            |
+
+## Section
+
+```json
+{
+  "sectionName": "app",
+  "sectionDetail": [
+    {
+      "detailName": "GeneralApps",
+      "tags": [],
+      "reports": [
+        {
+          "key": "apkSize",
+          "value": 200,
+          "additionalValue": [
+            {
+              "key": "ExcellenceIndex",
+              "value": 60
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
+| Payload                  | required | Description                      |
+|--------------------------|----------|----------------------------------|
+| sectionName              | true     | Section name                     |
+| sectionDetail            | true     | List of section detail           |
+| sectionDetail.detailName | true     | Section detail name              |
+| sectionDetail.tags       | false    | List of `string` of tag name     |
+| sectionDetail.reports    | true     | List of [Report](#report) Object |
+
+
+## Report
+
+```json
+{
+  "key": "apkSize",
+  "value": 200,
+  "label": "This is whitlisted because of reschadule feature release",
+  "status": "pass",
+  "additionalValue": [
+    {
+      "key": "excellenceIndex",
+      "value": 60,
+      "name": "Excellence Index"
+    }
+  ]
+}
+
+```
+
+| Payload         | required | Description                                                                                                                                                        |
+|-----------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| key             | true     | Threshold key                                                                                                                                                      |
+| value           | true     | Report main value                                                                                                                                                  |
+| label           | false    | Label for showing label or notes                                                                                                                                   |
+| status          | false    | One of this value [`pass`, `warning`, `fail`, `default`] default value is `default` and it will affect the metrix detail field color (green, yellow, red,no color) |
+| additionalValue | false    | Additional value is list of [Attribute](#attribute) object. This value can be aggreate later on dashboard                                                          |
