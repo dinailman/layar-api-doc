@@ -24,7 +24,8 @@ Curl example WIP
 
 ```json
 {
-  "dashboard": "android"
+  "id": "android",
+  "label": "Android"
 }
 ```
 
@@ -44,9 +45,30 @@ Curl example WIP
 > Example response
 
 ```json
-{
-  "dashboards": ["android", "IOS", "WEB", "android-TERA", "Backend-L&D"]
-}
+  {
+    "dashboards": [
+      {
+        "id": "android",
+        "label": "Android"
+      },
+      {
+        "id": "ios",
+        "label": "IOS"
+      },
+      {
+        "id": "web",
+        "label": "Web"
+      },
+      {
+        "id": "android-tera",
+        "label": "Android TERA"
+      },
+      {
+        "id": "backend-lnd",
+        "label": "Backend L&D"
+      }
+    ]
+  }
 ```
 
 `GET /dashboard`
@@ -60,7 +82,7 @@ Curl example WIP
 
 ```json
 {
-  "dashboard": "android",
+  "dashboardID": "android",
   "reportID": "pr-1410",
   "attributes": [
     {
@@ -97,6 +119,8 @@ Curl example WIP
           "key": "apkSize",
           "name": "APK Size",
           "hint": "Appliction APK Size",
+          "unit": "MB",
+          "format": "{value} MB",
           "attributes": [
             {
               "key": "type",
@@ -109,23 +133,18 @@ Curl example WIP
               "value": 50
             },
             {
-              "key": "unit",
-              "name": "Unit",
-              "value": "%"
-            },
-            {
               "key": "bounds",
               "name": "Bounds",
               "value": [
                 {
                   "key": "google",
                   "name": "Google Recomendation Size",
-                  "value": 20000
+                  "value": 200
                 },
                 {
                   "key": "alibaba",
                   "name": "Alibaba APK Size",
-                  "value": 100000
+                  "value": 400
                 }
               ]
             }
@@ -161,6 +180,8 @@ Curl example WIP
           "key": "unitTestCoverage",
           "name": "Unit Test Coverage",
           "hint": "Unit test coverage",
+          "unit": "%",
+          "format": "{value}%",
           "attributes": [
             {
               "key": "type",
@@ -171,27 +192,6 @@ Curl example WIP
               "key": "value",
               "name": "Threshold Value",
               "value": 50
-            },
-            {
-              "key": "unit",
-              "name": "Unit",
-              "value": "%"
-            },
-            {
-              "key": "bounds",
-              "name": "Bounds",
-              "value": [
-                 {
-                  "key": "google",
-                  "name": "Google Recomendation Size",
-                  "value": 20000
-                },
-                {
-                  "key": "alibaba",
-                  "name": "Alibaba APK Size",
-                  "value": 100000
-                }
-              ]
             }
           ]
         }
@@ -244,6 +244,8 @@ Curl example WIP
           "key": "ttfi",
           "name": "Time to first interaction",
           "hint": "Interaction Time",
+          "unit": "ms",
+          "format": "{value}ms",
           "attributes": [
             {
               "key": "type",
@@ -254,11 +256,6 @@ Curl example WIP
               "key": "value",
               "name": "Threshold Value",
               "value": 50
-            },
-            {
-              "key": "unit",
-              "name": "Unit",
-              "value": "%"
             }
           ]
         },
@@ -266,6 +263,8 @@ Curl example WIP
           "key": "fps",
           "name": "FPS",
           "hint": "Frame per second",
+          "unit": "FPS",
+          "format": "{value} FPS",
           "attributes": [
             {
               "key": "type",
@@ -364,12 +363,12 @@ Default behavior for this api is `upsert`
 `POST /report`
 
 
-| Payload    | required | Description                                                 |
-| ---------- | -------- | ----------------------------------------------------------- |
-| dashboard  | true     | Dashboard ID                                                |
-| reportID   | false    | Custom report id, if not provided it will be auto generated |
-| attributes | false    | List of [Attribute](#attribute) object                      |
-| sections   | true     | List of [Section](#section) object                          |
+| Payload     | required | Description                                                 |
+| ----------- | -------- | ----------------------------------------------------------- |
+| dashboardID | true     | Dashboard ID                                                |
+| reportID    | false    | Custom report id, if not provided it will be auto generated |
+| attributes  | false    | List of [Attribute](#attribute) object                      |
+| sections    | true     | List of [Section](#section) object                          |
 
 
 > Example response
@@ -409,6 +408,8 @@ Default behavior for this api is `upsert`
       "key": "ttfi",
       "name": "Time to first interaction",
       "hint": "Interaction Time",
+      "unit": "ms",
+      "format": "{value}ms",
       "attributes": [
         {
           "key": "type",
@@ -424,15 +425,18 @@ Default behavior for this api is `upsert`
       "tags": [],
       "reports": [
         {
-          "key": "apkSize",
-          "value": 200,
+          "headerKey": "ttfi",
+          "value": 1000,
+          "label": "",
+          "status": "pass",
           "additionalValue": [
             {
-              "key": "ExcellenceIndex",
+              "key": "excellenceIndex",
+              "name": "Excellence Index",
               "value": 60
             }
           ]
-        }
+        },
       ]
     }
   ]
@@ -456,6 +460,8 @@ Default behavior for this api is `upsert`
   "key": "ttfi",
   "name": "Time to first interaction",
   "hint": "Interaction Time",
+  "unit": "ms",
+  "format": "{value}ms",
   "attributes": [
     {
       "key": "type",
@@ -472,6 +478,8 @@ Default behavior for this api is `upsert`
 | key        | true     | Header Key                             |
 | name       | true     | Header Name                            |
 | hint       | false    | Hint text for header                   |
+| unit       | false    | Unit for this header                   |
+| format     | false    | format to render the value             |
 | attributes | false    | List of [Attribute](#attribute) object |
 
 
