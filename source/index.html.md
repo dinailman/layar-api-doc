@@ -92,13 +92,53 @@ Curl example WIP
   "sections": [
     {
       "sectionName": "app",
+      "sectionHeader": [
+        {
+          "key": "apkSize",
+          "name": "APK Size",
+          "hint": "Appliction APK Size",
+          "attributes": [
+            {
+              "key": "type",
+              "name": "Threshold Type",
+              "value": "lower"
+            },
+            {
+              "key": "value",
+              "name": "Threshold Value",
+              "value": 50
+            },
+            {
+              "key": "unit",
+              "name": "Unit",
+              "value": "%"
+            },
+            {
+              "key": "bounds",
+              "name": "Bounds",
+              "value": [
+                {
+                  "key": "google",
+                  "name": "Google Recomendation Size",
+                  "value": 20000
+                },
+                {
+                  "key": "alibaba",
+                  "name": "Alibaba APK Size",
+                  "value": 100000
+                }
+              ]
+            }
+          ]
+        }
+      ],
       "sectionDetail": [
         {
           "detailName": "GeneralApps",
           "tags": [],
           "reports": [
             {
-              "thresholdId": "apkSize",
+              "headerKey": "apkSize",
               "value": 200,
               "label": "",
               "status": "pass",
@@ -116,13 +156,53 @@ Curl example WIP
     },
     {
       "sectionName": "product",
+      "sectionHeader": [
+        {
+          "key": "unitTestCoverage",
+          "name": "Unit Test Coverage",
+          "hint": "Unit test coverage",
+          "attributes": [
+            {
+              "key": "type",
+              "name": "Threshold Type",
+              "value": "Higher"
+            },
+            {
+              "key": "value",
+              "name": "Threshold Value",
+              "value": 50
+            },
+            {
+              "key": "unit",
+              "name": "Unit",
+              "value": "%"
+            },
+            {
+              "key": "bounds",
+              "name": "Bounds",
+              "value": [
+                 {
+                  "key": "google",
+                  "name": "Google Recomendation Size",
+                  "value": 20000
+                },
+                {
+                  "key": "alibaba",
+                  "name": "Alibaba APK Size",
+                  "value": 100000
+                }
+              ]
+            }
+          ]
+        }
+      ],
       "sectionDetail": [
         {
           "detailName": "Flight",
           "tags": ["flight"],
           "reports": [
             {
-              "thresholdId": "unitTestCoverage",
+              "headerKey": "unitTestCoverage",
               "value": 20,
               "label": "",
               "status": "pass",
@@ -141,7 +221,7 @@ Curl example WIP
           "tags": ["train"],
           "reports": [
             {
-              "thresholdId": "unitTestCoverage",
+              "headerKey": "unitTestCoverage",
               "value": 30,
               "label": "",
               "status": "pass",
@@ -159,13 +239,59 @@ Curl example WIP
     },
     {
       "sectionName": "screen",
+      "sectionHeader": [
+        {
+          "key": "ttfi",
+          "name": "Time to first interaction",
+          "hint": "Interaction Time",
+          "attributes": [
+            {
+              "key": "type",
+              "name": "Threshold Type",
+              "value": "Lower"
+            },
+            {
+              "key": "value",
+              "name": "Threshold Value",
+              "value": 50
+            },
+            {
+              "key": "unit",
+              "name": "Unit",
+              "value": "%"
+            }
+          ]
+        },
+        {
+          "key": "fps",
+          "name": "FPS",
+          "hint": "Frame per second",
+          "attributes": [
+            {
+              "key": "type",
+              "name": "Threshold Type",
+              "value": "higher"
+            },
+            {
+              "key": "value",
+              "name": "Threshold Value",
+              "value": 60
+            },
+            {
+              "key": "unit",
+              "name": "Unit",
+              "value": "frame"
+            }
+          ]
+        }
+      ],
       "sectionDetail": [
         {
           "detailName": "FlightSearch",
           "tags": ["flight", "search"],
           "reports": [
             {
-              "thresholdId": "ttfi",
+              "headerKey": "ttfi",
               "value": 2000,
               "label": "",
               "status": "pass",
@@ -178,7 +304,7 @@ Curl example WIP
               ]
             },
             {
-              "thresholdId": "fps",
+              "headerKey": "fps",
               "value": 40,
               "label": "",
               "status": "pass",
@@ -197,7 +323,7 @@ Curl example WIP
           "tags": ["train"],
           "reports": [
             {
-              "thresholdId": "ttfi",
+              "headerKey": "ttfi",
               "value": 1000,
               "label": "",
               "status": "pass",
@@ -210,7 +336,7 @@ Curl example WIP
               ]
             },
             {
-              "thresholdId": "fps",
+              "headerKey": "fps",
               "value": 30,
               "label": "",
               "status": "pass",
@@ -229,16 +355,17 @@ Curl example WIP
   ]
 }
 
+
 ```
 
 This api is used for send report to layar dashboard <br>
-Default behavior for this api is upsert
+Default behavior for this api is `upsert`
 
-`PUT /report`
+`POST /report`
 
 
 | Payload    | required | Description                                                 |
-|------------|----------|-------------------------------------------------------------|
+| ---------- | -------- | ----------------------------------------------------------- |
 | dashboard  | true     | Dashboard ID                                                |
 | reportID   | false    | Custom report id, if not provided it will be auto generated |
 | attributes | false    | List of [Attribute](#attribute) object                      |
@@ -255,185 +382,6 @@ Default behavior for this api is upsert
 ```
 
 
-# Thresholds
-
-## Add a Threshold
-
-`PUT /threshold`
-
-> Example Paylaod
-
-```json
-{
-  "dashboard": "android",
-  "section": "app",
-  "thresholdId": "apkSize",
-  "thresholdName": "APK Size",
-  "thresholdType": "Lower",
-  "thresholdValue": 30000,
-  "unit": "KB",
-  "bounds": [
-    {
-      "key": "Google Recomendation Size",
-      "value": 20000
-    },
-    {
-      "key": "Alibaba APK Size",
-      "value": 100000
-    }
-  ]
-}
-```
-
-| Payload        | required | Description                                                        |
-|----------------|----------|--------------------------------------------------------------------|
-| dashboard      | true     | One of [Dashboard](#get-all-dashboard)                             |
-| section        | true     | Section name                                                       |
-| thresholdId    | true     | Threshold id                                                       |
-| thresholdName  | true     | Threshold name                                                     |
-| thresholdType  | true     | Threshold type is one of this value `["Lower", "Higher", "Equal"]` |
-| thresholdValue | true     | Threshold value                                                    |
-| unit           | false    | Threshold unit                                                     |
-| bounds         | false    | List of [Attribute](#attribute) object                             |
-
-
-## Get Thresholds by dashboard name
-
-`GET /threshold?dashboard=android`
-
-> Example response
-
-```json
-{
-  "sections": [
-    {
-      "sectionName": "app",
-      "thresholds": [
-        {
-          "thresholdId": "apkSize",
-          "thresholdName": "APK Size",
-          "thresholdType": "Lower",
-          "thresholdValue": 30000,
-          "unit": "KB",
-          "bounds": [
-            {
-              "key": "googleSize",
-              "name": "Google Recomendation Size",
-              "value": 20000
-            },
-            {
-              "key": "alibabaAPKSize",
-              "name": "Alibaba APK Size",
-              "value": 100000
-            }
-          ]
-        },
-        {
-          "thresholdId": "assetSize",
-          "thresholdName": "Asset Size",
-          "thresholdType": "Lower",
-          "thresholdValue": 3000,
-          "unit": "KB",
-          "bounds": []
-        }
-      ]
-    },
-    {
-      "sectionName": "product",
-      "thresholds": [
-        {
-          "thresholdId": "unitTestCoverage",
-          "thresholdName": "Unit Test Coverage",
-          "thresholdType": "Higher",
-          "thresholdValue": 50,
-          "unit": "%",
-          "bounds": []
-        }
-      ]
-    },
-    {
-      "sectionName": "screen",
-      "thresholds": [
-        {
-          "thresholdId": "ttfi",
-          "thresholdName": "Time to first interaction",
-          "thresholdType": "Lower",
-          "thresholdValue": 200,
-          "unit": "ms",
-          "bounds": []
-        },
-        {
-          "thresholdId": "fps",
-          "thresholdName": "Frame per second",
-          "thresholdType": "Higher",
-          "thresholdValue": 60,
-          "unit": "frame",
-          "bounds": []
-        },
-        {
-          "thresholdId": "noWarning",
-          "thresholdName": "No lint Warning",
-          "thresholdType": "Equal",
-          "thresholdValue": true,
-          "unit": "",
-          "bounds": []
-        }
-      ]
-    }
-  ]
-}
-```
-
-## Get Thresholds by section & dashboard
-
-`GET /threshold?dashboard=android&section=app`
-
-> Example response
-
-```json
-{
-  "sections": [
-    {
-      "sectionName": "app",
-      "thresholds": [
-        {
-          "thresholdId": "apkSize",
-          "thresholdName": "APK Size",
-          "thresholdType": "Lower",
-          "thresholdValue": 30000,
-          "unit": "KB",
-          "bounds": [
-            {
-              "key": "google",
-              "name": "Google Recomendation Size",
-              "value": 20000
-            },
-            {
-              "key": "alibaba",
-              "name": "Alibaba APK Size",
-              "value": 100000
-            }
-          ]
-        },
-        {
-          "thresholdId": "assetSize",
-          "thresholdName": "Asset Size",
-          "thresholdType": "Lower",
-          "thresholdValue": 3000,
-          "unit": "KB",
-          "bounds": []
-        }
-      ]
-    }
-  ]
-}
-```
-
-## Update Thresholds
-
-//TODO
-
-
 # Standard Objects
 ## Attribute
 
@@ -446,7 +394,7 @@ Default behavior for this api is upsert
 ```
 
 | Payload | required | Description                                               |
-|---------|----------|-----------------------------------------------------------|
+| ------- | -------- | --------------------------------------------------------- |
 | key     | true     | Attribute key,                                            |
 | name    | true     | Attribute name, this fields will shown on dashboard label |
 | value   | true     | Value to be shown on dashboard                            |
@@ -456,6 +404,20 @@ Default behavior for this api is upsert
 ```json
 {
   "sectionName": "app",
+  "sectionHeader": [
+    {
+      "key": "ttfi",
+      "name": "Time to first interaction",
+      "hint": "Interaction Time",
+      "attributes": [
+        {
+          "key": "type",
+          "name": "Threshold Type",
+          "value": "Lower"
+        }
+      ]
+    }
+  ],
   "sectionDetail": [
     {
       "detailName": "GeneralApps",
@@ -477,20 +439,47 @@ Default behavior for this api is upsert
 }
 ```
 
-| Payload                  | required | Description                      |
-|--------------------------|----------|----------------------------------|
-| sectionName              | true     | Section name                     |
-| sectionDetail            | true     | List of section detail           |
-| sectionDetail.detailName | true     | Section detail name              |
-| sectionDetail.tags       | false    | List of `string` of tag name     |
-| sectionDetail.reports    | true     | List of [Report](#report) Object |
+| Payload                  | required | Description                                      |
+| ------------------------ | -------- | ------------------------------------------------ |
+| sectionName              | true     | Section name                                     |
+| sectionHeader            | true     | List of [Section Header](#section-header) Object |
+| sectionDetail            | true     | List of section detail                           |
+| sectionDetail.detailName | true     | Section detail name                              |
+| sectionDetail.tags       | false    | List of `string` of tag name                     |
+| sectionDetail.reports    | true     | List of [Report](#report) Object                 |
+
+## Section Header
+
+```json
+
+{
+  "key": "ttfi",
+  "name": "Time to first interaction",
+  "hint": "Interaction Time",
+  "attributes": [
+    {
+      "key": "type",
+      "name": "Threshold Type",
+      "value": "Lower"
+    }
+  ]
+}
+
+```
+
+| Payload    | required | Description                            |
+| ---------- | -------- | -------------------------------------- |
+| key        | true     | Header Key                             |
+| name       | true     | Header Name                            |
+| hint       | false    | Hint text for header                   |
+| attributes | false    | List of [Attribute](#attribute) object |
 
 
 ## Report
 
 ```json
 {
-  "key": "apkSize",
+  "headerKey": "apkSize",
   "value": 200,
   "label": "This is whitlisted because of reschadule feature release",
   "status": "pass",
@@ -505,10 +494,10 @@ Default behavior for this api is upsert
 
 ```
 
-| Payload         | required | Description                                                                                                                                                        |
-|-----------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| key             | true     | Threshold key                                                                                                                                                      |
-| value           | true     | Report main value                                                                                                                                                  |
-| label           | false    | Label for showing label or notes                                                                                                                                   |
-| status          | false    | One of this value [`pass`, `warning`, `fail`, `default`] default value is `default` and it will affect the metrix detail field color (green, yellow, red,no color) |
-| additionalValue | false    | Additional value is list of [Attribute](#attribute) object. This value can be aggreate later on dashboard                                                          |
+| Payload         | required | Description                                                                                                                                                            |
+| --------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| headerKey       | true     | Threshold key                                                                                                                                                          |
+| value           | true     | Report main value                                                                                                                                                      |
+| label           | false    | Label for showing label or notes                                                                                                                                       |
+| status          | false    | One of this value [`pass`, `warning`, `fail`, `default`] default value is `default` and it will affect the metrix detail field color (green, yellow, red and no color) |
+| additionalValue | false    | Additional value is list of [Attribute](#attribute) object. This value can be aggreate later on dashboard                                                              |
