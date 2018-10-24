@@ -155,9 +155,8 @@ Curl example WIP
         {
           "detailName": "GeneralApps",
           "tags": [],
-          "reports": [
-            {
-              "headerKey": "apkSize",
+          "reports": {
+            "apkSize": {
               "value": 200,
               "label": "",
               "status": "pass",
@@ -169,7 +168,7 @@ Curl example WIP
                 }
               ]
             }
-          ]
+          }
         }
       ]
     },
@@ -200,9 +199,8 @@ Curl example WIP
         {
           "detailName": "Flight",
           "tags": ["flight"],
-          "reports": [
-            {
-              "headerKey": "unitTestCoverage",
+          "reports": {
+            "unitTestCoverage": {
               "value": 20,
               "label": "",
               "status": "pass",
@@ -214,14 +212,13 @@ Curl example WIP
                 }
               ]
             }
-          ]
+          }
         },
         {
           "detailName": "Train",
           "tags": ["train"],
-          "reports": [
-            {
-              "headerKey": "unitTestCoverage",
+          "reports": {
+            "unitTestCoverage": {
               "value": 30,
               "label": "",
               "status": "pass",
@@ -233,7 +230,7 @@ Curl example WIP
                 }
               ]
             }
-          ]
+          }
         }
       ]
     },
@@ -288,9 +285,8 @@ Curl example WIP
         {
           "detailName": "FlightSearch",
           "tags": ["flight", "search"],
-          "reports": [
-            {
-              "headerKey": "ttfi",
+          "reports": {
+            "ttfi": {
               "value": 2000,
               "label": "",
               "status": "pass",
@@ -302,8 +298,7 @@ Curl example WIP
                 }
               ]
             },
-            {
-              "headerKey": "fps",
+            "fps": {
               "value": 40,
               "label": "",
               "status": "pass",
@@ -315,14 +310,13 @@ Curl example WIP
                 }
               ]
             }
-          ]
+          }
         },
         {
           "detailName": "TrainSearch",
           "tags": ["train"],
-          "reports": [
-            {
-              "headerKey": "ttfi",
+          "reports": {
+            "ttfi": {
               "value": 1000,
               "label": "",
               "status": "pass",
@@ -334,8 +328,7 @@ Curl example WIP
                 }
               ]
             },
-            {
-              "headerKey": "fps",
+            "fps": {
               "value": 30,
               "label": "",
               "status": "pass",
@@ -347,13 +340,12 @@ Curl example WIP
                 }
               ]
             }
-          ]
+          }
         }
       ]
     }
   ]
 }
-
 
 ```
 
@@ -423,9 +415,8 @@ Default behavior for this api is `upsert`
     {
       "detailName": "GeneralApps",
       "tags": [],
-      "reports": [
-        {
-          "headerKey": "ttfi",
+      "reports": {
+        "ttfi": {
           "value": 1000,
           "label": "",
           "status": "pass",
@@ -436,21 +427,22 @@ Default behavior for this api is `upsert`
               "value": 60
             }
           ]
-        },
-      ]
+        }
+      }
     }
   ]
 }
+
 ```
 
-| Payload                  | required | Description                                      |
-| ------------------------ | -------- | ------------------------------------------------ |
-| sectionName              | true     | Section name                                     |
-| sectionHeader            | true     | List of [Section Header](#section-header) Object |
-| sectionDetail            | true     | List of section detail                           |
-| sectionDetail.detailName | true     | Section detail name                              |
-| sectionDetail.tags       | false    | List of `string` of tag name                     |
-| sectionDetail.reports    | true     | List of [Report](#report) Object                 |
+| Payload                  | required | Description                                                    |
+| ------------------------ | -------- | -------------------------------------------------------------- |
+| sectionName              | true     | Section name                                                   |
+| sectionHeader            | true     | List of [Section Header](#section-header) Object               |
+| sectionDetail            | true     | List of section detail                                         |
+| sectionDetail.detailName | true     | Section detail name                                            |
+| sectionDetail.tags       | false    | List of `string` of tag name                                   |
+| sectionDetail.reports    | true     | Objects of header key that contain object of [Report](#report) |
 
 ## Section Header
 
@@ -487,7 +479,6 @@ Default behavior for this api is `upsert`
 
 ```json
 {
-  "headerKey": "apkSize",
   "value": 200,
   "label": "This is whitlisted because of reschadule feature release",
   "status": "pass",
@@ -504,7 +495,6 @@ Default behavior for this api is `upsert`
 
 | Payload         | required | Description                                                                                                                                                            |
 | --------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| headerKey       | true     | Threshold key                                                                                                                                                          |
 | value           | true     | Report main value                                                                                                                                                      |
 | label           | false    | Label for showing label or notes                                                                                                                                       |
 | status          | false    | One of this value [`pass`, `warning`, `fail`, `default`] default value is `default` and it will affect the metrix detail field color (green, yellow, red and no color) |
