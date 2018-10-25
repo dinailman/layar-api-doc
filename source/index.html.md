@@ -15,6 +15,7 @@ search: true
 Layar API Documentation. WIP and Draft
 
 Curl example WIP
+<br/>
 Public endpoint: `https://lr6724zr2i.execute-api.ap-southeast-1.amazonaws.com/prod`
 
 # Dashboards
