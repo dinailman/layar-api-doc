@@ -37,7 +37,7 @@ Curl example WIP
 }
 ```
 
-`PUT /dashboard`
+`POST /dashboard`
 
 
 ## Get all dashboard
