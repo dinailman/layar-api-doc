@@ -161,14 +161,7 @@ Public endpoint: `https://lr6724zr2i.execute-api.ap-southeast-1.amazonaws.com/pr
             "apkSize": {
               "value": 200,
               "label": "",
-              "status": "pass",
-              "additionalValue": [
-                {
-                  "key": "excellenceIndex",
-                  "name": "Excellence Index",
-                  "value": 60
-                }
-              ]
+              "status": "pass"
             }
           }
         }
@@ -200,37 +193,27 @@ Public endpoint: `https://lr6724zr2i.execute-api.ap-southeast-1.amazonaws.com/pr
       "sectionDetail": [
         {
           "detailName": "Flight",
-          "tags": ["flight"],
+          "tags": [
+            "flight"
+          ],
           "reports": {
             "unitTestCoverage": {
               "value": 20,
               "label": "",
-              "status": "pass",
-              "additionalValue": [
-                {
-                  "key": "excellenceIndex",
-                  "name": "Excellence Index",
-                  "value": 60
-                }
-              ]
+              "status": "pass"
             }
           }
         },
         {
           "detailName": "Train",
-          "tags": ["train"],
+          "tags": [
+            "train"
+          ],
           "reports": {
             "unitTestCoverage": {
               "value": 30,
               "label": "",
-              "status": "pass",
-              "additionalValue": [
-                {
-                  "key": "excellenceIndex",
-                  "name": "Excellence Index",
-                  "value": 60
-                }
-              ]
+              "status": "pass"
             }
           }
         }
@@ -286,61 +269,38 @@ Public endpoint: `https://lr6724zr2i.execute-api.ap-southeast-1.amazonaws.com/pr
       "sectionDetail": [
         {
           "detailName": "FlightSearch",
-          "tags": ["flight", "search"],
+          "tags": [
+            "flight",
+            "search"
+          ],
           "reports": {
             "ttfi": {
               "value": 2000,
               "label": "",
-              "status": "pass",
-              "additionalValue": [
-                {
-                  "key": "excellenceIndex",
-                  "name": "Excellence Index",
-                  "value": 60
-                }
-              ]
+              "status": "pass"
             },
             "fps": {
               "value": 40,
               "label": "",
-              "status": "pass",
-              "additionalValue": [
-                {
-                  "key": "excellenceIndex",
-                  "name": "Excellence Index",
-                  "value": 60
-                }
-              ]
+              "status": "pass"
             }
           }
         },
         {
           "detailName": "TrainSearch",
-          "tags": ["train"],
+          "tags": [
+            "train"
+          ],
           "reports": {
             "ttfi": {
               "value": 1000,
               "label": "",
-              "status": "pass",
-              "additionalValue": [
-                {
-                  "key": "excellenceIndex",
-                  "name": "Excellence Index",
-                  "value": 60
-                }
-              ]
+              "status": "pass"
             },
             "fps": {
               "value": 30,
               "label": "",
-              "status": "pass",
-              "additionalValue": [
-                {
-                  "key": "excellenceIndex",
-                  "name": "Excellence Index",
-                  "value": 60
-                }
-              ]
+              "status": "pass"
             }
           }
         }
@@ -422,14 +382,7 @@ Default behavior for this api is `upsert`
         "ttfi": {
           "value": 1000,
           "label": "",
-          "status": "pass",
-          "additionalValue": [
-            {
-              "key": "excellenceIndex",
-              "name": "Excellence Index",
-              "value": 60
-            }
-          ]
+          "status": "pass"
         }
       }
     }
@@ -484,21 +437,13 @@ Default behavior for this api is `upsert`
 {
   "value": 200,
   "label": "This is whitlisted because of reschadule feature release",
-  "status": "pass",
-  "additionalValue": [
-    {
-      "key": "excellenceIndex",
-      "value": 60,
-      "name": "Excellence Index"
-    }
-  ]
+  "status": "pass"
 }
 
 ```
 
-| Payload         | required | Description                                                                                                                                                            |
-| --------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| value           | true     | Report main value                                                                                                                                                      |
-| label           | false    | Label for showing label or notes                                                                                                                                       |
-| status          | false    | One of this value [`pass`, `warning`, `fail`, `default`] default value is `default` and it will affect the metrix detail field color (green, yellow, red and no color) |
-| additionalValue | false    | Additional value is list of [Attribute](#attribute) object. This value can be aggreate later on dashboard                                                              |
+| Payload | required | Description                                                                                                                                                            |
+| ------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| value   | true     | Report main value                                                                                                                                                      |
+| label   | false    | Label for showing label or notes                                                                                                                                       |
+| status  | false    | One of this value [`pass`, `warning`, `fail`, `default`] default value is `default` and it will affect the metrix detail field color (green, yellow, red and no color) |
