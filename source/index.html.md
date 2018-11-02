@@ -77,6 +77,11 @@ Public endpoint: `https://lr6724zr2i.execute-api.ap-southeast-1.amazonaws.com/pr
 
 # Reports
 
+## Get a new Report
+
+`GET /report?dashboardId={value}&reportId={value}`
+WIP
+
 ## Add a new Report
 
 
@@ -115,7 +120,7 @@ Public endpoint: `https://lr6724zr2i.execute-api.ap-southeast-1.amazonaws.com/pr
   ],
   "sections": [
     {
-      "sectionName": "app",
+      "id": "app",
       "sectionHeader": [
         {
           "key": "apkSize",
@@ -155,7 +160,7 @@ Public endpoint: `https://lr6724zr2i.execute-api.ap-southeast-1.amazonaws.com/pr
       ],
       "sectionDetail": [
         {
-          "detailName": "GeneralApps",
+          "id": "GeneralApps",
           "tags": [],
           "reports": {
             "apkSize": {
@@ -168,7 +173,7 @@ Public endpoint: `https://lr6724zr2i.execute-api.ap-southeast-1.amazonaws.com/pr
       ]
     },
     {
-      "sectionName": "product",
+      "id": "product",
       "sectionHeader": [
         {
           "key": "unitTestCoverage",
@@ -192,7 +197,7 @@ Public endpoint: `https://lr6724zr2i.execute-api.ap-southeast-1.amazonaws.com/pr
       ],
       "sectionDetail": [
         {
-          "detailName": "Flight",
+          "id": "Flight",
           "tags": [
             "flight"
           ],
@@ -205,7 +210,7 @@ Public endpoint: `https://lr6724zr2i.execute-api.ap-southeast-1.amazonaws.com/pr
           }
         },
         {
-          "detailName": "Train",
+          "id": "Train",
           "tags": [
             "train"
           ],
@@ -220,7 +225,7 @@ Public endpoint: `https://lr6724zr2i.execute-api.ap-southeast-1.amazonaws.com/pr
       ]
     },
     {
-      "sectionName": "screen",
+      "id": "screen",
       "sectionHeader": [
         {
           "key": "ttfi",
@@ -268,7 +273,7 @@ Public endpoint: `https://lr6724zr2i.execute-api.ap-southeast-1.amazonaws.com/pr
       ],
       "sectionDetail": [
         {
-          "detailName": "FlightSearch",
+          "id": "FlightSearch",
           "tags": [
             "flight",
             "search"
@@ -287,7 +292,7 @@ Public endpoint: `https://lr6724zr2i.execute-api.ap-southeast-1.amazonaws.com/pr
           }
         },
         {
-          "detailName": "TrainSearch",
+          "id": "TrainSearch",
           "tags": [
             "train"
           ],
@@ -319,7 +324,7 @@ Default behavior for this api is `upsert`
 
 
 | Payload     | required | Description                                                 |
-| ----------- | -------- | ----------------------------------------------------------- |
+|-------------|----------|-------------------------------------------------------------|
 | dashboardID | true     | Dashboard ID                                                |
 | reportID    | false    | Custom report id, if not provided it will be auto generated |
 | attributes  | false    | List of [Attribute](#attribute) object                      |
@@ -348,7 +353,7 @@ Default behavior for this api is `upsert`
 ```
 
 | Payload | required | Description                                               |
-| ------- | -------- | --------------------------------------------------------- |
+|---------|----------|-----------------------------------------------------------|
 | key     | true     | Attribute key,                                            |
 | name    | true     | Attribute name, this fields will shown on dashboard label |
 | value   | true     | Value to be shown on dashboard                            |
@@ -357,7 +362,7 @@ Default behavior for this api is `upsert`
 
 ```json
 {
-  "sectionName": "app",
+  "id": "app",
   "sectionHeader": [
     {
       "key": "ttfi",
@@ -376,7 +381,7 @@ Default behavior for this api is `upsert`
   ],
   "sectionDetail": [
     {
-      "detailName": "GeneralApps",
+      "id": "GeneralApps",
       "tags": [],
       "reports": {
         "ttfi": {
@@ -391,14 +396,14 @@ Default behavior for this api is `upsert`
 
 ```
 
-| Payload                  | required | Description                                                    |
-| ------------------------ | -------- | -------------------------------------------------------------- |
-| sectionName              | true     | Section name                                                   |
-| sectionHeader            | true     | List of [Section Header](#section-header) Object               |
-| sectionDetail            | true     | List of section detail                                         |
-| sectionDetail.detailName | true     | Section detail name                                            |
-| sectionDetail.tags       | false    | List of `string` of tag name                                   |
-| sectionDetail.reports    | true     | Objects of header key that contain object of [Report](#report) |
+| Payload               | required | Description                                                    |
+|-----------------------|----------|----------------------------------------------------------------|
+| id                    | true     | Section name                                                   |
+| sectionHeader         | true     | List of [Section Header](#section-header) Object               |
+| sectionDetail         | true     | List of section detail                                         |
+| sectionDetail.id      | true     | Section detail name                                            |
+| sectionDetail.tags    | false    | List of `string` of tag name                                   |
+| sectionDetail.reports | true     | Objects of header key that contain object of [Report](#report) |
 
 ## Section Header
 
@@ -422,7 +427,7 @@ Default behavior for this api is `upsert`
 ```
 
 | Payload    | required | Description                            |
-| ---------- | -------- | -------------------------------------- |
+|------------|----------|----------------------------------------|
 | key        | true     | Header Key                             |
 | name       | true     | Header Name                            |
 | hint       | false    | Hint text for header                   |
@@ -443,7 +448,7 @@ Default behavior for this api is `upsert`
 ```
 
 | Payload | required | Description                                                                                                                                                            |
-| ------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|---------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | value   | true     | Report main value                                                                                                                                                      |
 | label   | false    | Label for showing label or notes                                                                                                                                       |
 | status  | false    | One of this value [`pass`, `warning`, `fail`, `default`] default value is `default` and it will affect the metrix detail field color (green, yellow, red and no color) |
