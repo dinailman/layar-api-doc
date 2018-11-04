@@ -89,7 +89,7 @@ Public endpoint: `https://lr6724zr2i.execute-api.ap-southeast-1.amazonaws.com/pr
 ```json
 {
   "dashboardID": "android",
-  "reportID": "pr-1410",
+  "reportID": "pr-1000",
   "attributes": [
     {
       "key": "commitHash",
@@ -160,12 +160,17 @@ Public endpoint: `https://lr6724zr2i.execute-api.ap-southeast-1.amazonaws.com/pr
       "sectionDetail": [
         {
           "id": "GeneralApps",
-          "tags": [],
+          "tags": ["haha"],
           "reports": {
             "apkSize": {
               "value": 200,
-              "label": "",
-              "status": "pass"
+              "label": null,
+              "status": "fail"
+            },
+            "xxSize": {
+              "value": 200,
+              "label": null,
+              "status": "fail"
             }
           }
         }
@@ -197,26 +202,22 @@ Public endpoint: `https://lr6724zr2i.execute-api.ap-southeast-1.amazonaws.com/pr
       "sectionDetail": [
         {
           "id": "Flight",
-          "tags": [
-            "flight"
-          ],
+          "tags": ["flight"],
           "reports": {
             "unitTestCoverage": {
               "value": 20,
-              "label": "",
+              "label": null,
               "status": "pass"
             }
           }
         },
         {
           "id": "Train",
-          "tags": [
-            "train"
-          ],
+          "tags": ["train"],
           "reports": {
             "unitTestCoverage": {
               "value": 30,
-              "label": "",
+              "label": null,
               "status": "pass"
             }
           }
@@ -273,37 +274,32 @@ Public endpoint: `https://lr6724zr2i.execute-api.ap-southeast-1.amazonaws.com/pr
       "sectionDetail": [
         {
           "id": "FlightSearch",
-          "tags": [
-            "flight",
-            "search"
-          ],
+          "tags": ["flight", "search"],
           "reports": {
             "ttfi": {
               "value": 2000,
-              "label": "",
+              "label": null,
               "status": "pass"
             },
             "fps": {
               "value": 40,
-              "label": "",
+              "label": null,
               "status": "pass"
             }
           }
         },
         {
           "id": "TrainSearch",
-          "tags": [
-            "train"
-          ],
+          "tags": ["train"],
           "reports": {
             "ttfi": {
               "value": 1000,
-              "label": "",
+              "label": null,
               "status": "pass"
             },
             "fps": {
               "value": 30,
-              "label": "",
+              "label": null,
               "status": "pass"
             }
           }
@@ -312,6 +308,7 @@ Public endpoint: `https://lr6724zr2i.execute-api.ap-southeast-1.amazonaws.com/pr
     }
   ]
 }
+
 
 
 ```
@@ -323,7 +320,7 @@ Default behavior for this api is `upsert`
 
 
 | Payload     | required | Description                                                 |
-| ----------- | -------- | ----------------------------------------------------------- |
+|-------------|----------|-------------------------------------------------------------|
 | dashboardID | true     | Dashboard ID                                                |
 | reportID    | false    | Custom report id, if not provided it will be auto generated |
 | attributes  | false    | List of [Attribute](#attribute) object                      |
@@ -352,7 +349,7 @@ Default behavior for this api is `upsert`
 ```
 
 | Payload | required | Description                                               |
-| ------- | -------- | --------------------------------------------------------- |
+|---------|----------|-----------------------------------------------------------|
 | key     | true     | Attribute key,                                            |
 | name    | true     | Attribute name, this fields will shown on dashboard label |
 | value   | true     | Value to be shown on dashboard                            |
@@ -396,7 +393,7 @@ Default behavior for this api is `upsert`
 ```
 
 | Payload               | required | Description                                                    |
-| --------------------- | -------- | -------------------------------------------------------------- |
+|-----------------------|----------|----------------------------------------------------------------|
 | id                    | true     | Section name                                                   |
 | sectionHeader         | true     | List of [Section Header](#section-header) Object               |
 | sectionDetail         | true     | List of section detail                                         |
@@ -426,7 +423,7 @@ Default behavior for this api is `upsert`
 ```
 
 | Payload    | required | Description                            |
-| ---------- | -------- | -------------------------------------- |
+|------------|----------|----------------------------------------|
 | key        | true     | Header Key                             |
 | name       | true     | Header Name                            |
 | hint       | false    | Hint text for header                   |
@@ -447,7 +444,7 @@ Default behavior for this api is `upsert`
 ```
 
 | Payload | required | Description                                                                                                                                                            |
-| ------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|---------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | value   | true     | Report main value                                                                                                                                                      |
 | label   | false    | Label for showing label or notes                                                                                                                                       |
 | status  | false    | One of this value [`pass`, `warning`, `fail`, `default`] default value is `default` and it will affect the metrix detail field color (green, yellow, red and no color) |
