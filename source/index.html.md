@@ -443,8 +443,8 @@ Default behavior for this api is `upsert`
 
 ```
 
-| Payload | required | Description                                                                                                                                                            |
-|---------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| value   | true     | Report main value                                                                                                                                                      |
-| label   | false    | Label for showing label or notes                                                                                                                                       |
-| status  | false    | One of this value [`pass`, `warning`, `fail`, `default`] default value is `default` and it will affect the metrix detail field color (green, yellow, red and no color) |
+| Payload | required | Description                                                                                                                                                         |
+|---------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| value   | true     | Report main value                                                                                                                                                   |
+| label   | false    | Label for showing label or notes                                                                                                                                    |
+| status  | false    | One of this value [`pass`, `warn`, `fail`, `default`] default value is `default` and it will affect the metrix detail field color (green, yellow, red and no color) |
